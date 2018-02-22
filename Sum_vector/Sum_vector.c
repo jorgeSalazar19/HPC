@@ -1,22 +1,30 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <omp.h>
+#define CHUNKSIZE 10
 
 void Array_dinamic(int size , float *vectorA){
 
-	if (vectorA==NULL)
+  int chunk = CHUNKSIZE;
+  #pragma omp parallel shared(vectorA,chunk)
+  {
+    if (vectorA==NULL)
         printf ("Error de Mem.");
 
     printf("%s", "Vector = [" );
-    for (int i=0; i<size; i++){
-		float random = rand()%100;
-        vectorA[i]=random;
-        printf("%.2f ", vectorA[i] );
-        random = 0;
-    }
+    #pragma omp for schedule(dynamic,chunk)
+      for (int i=0; i<size; i++){
+      float random = rand()%100;
+          vectorA[i]=random;
+          printf("%.2f ", vectorA[i] );
+          random = 0;
+      }
     printf("%s", "]" );
     printf("\n");
+  }
 }
+
 
 void Sum_vector(float *vectorA , float *vectorB , float *result , int size){
 	printf("%s", "Vector Resultado = [" );
@@ -53,6 +61,10 @@ int main(int argc, char const *argv[])
 {
 	/* code */
 	int valorUsuario;
+  int tiempo_inicio, tiempo_final;
+  double segundos;
+
+  tiempo_inicio = clock();
 
 	printf("%s\n\n", "Suma de vectores" );
 	printf("Introduzca tamaño de lo vectores: ");
@@ -70,6 +82,18 @@ int main(int argc, char const *argv[])
     Array_dinamic(valorUsuario , vectorB);
     Sum_vector(vectorA , vectorB , result , valorUsuario);
     save_vector(result,valorUsuario);
+
+  
+
+  free(vectorA);
+  free(vectorB);
+  free(result);
+
+  tiempo_final = clock();
+
+  segundos = (double)(tiempo_inicio - tiempo_final) / CLOCKS_PER_SEC;
+
+  printf("%f\n", segundos );
 
 	return 0;
 }
