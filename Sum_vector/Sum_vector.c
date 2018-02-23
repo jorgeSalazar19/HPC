@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <omp.h>
-#define CHUNKSIZE 2
+#define CHUNKSIZE 10
 #define ID_1 1
 #define ID_2 2
 
@@ -86,10 +86,6 @@ int main(int argc, char const *argv[])
 {
 	/* code */
 	int valorUsuario;
-  int tiempo_inicio , tiempo_final;
-  double segundos;
-
-  tiempo_inicio = clock();
 	printf("%s\n\n", "Suma de vectores" );
 	printf("Introduzca tamaño de lo vectores: ");
     scanf("%d", &valorUsuario);
@@ -110,9 +106,6 @@ int main(int argc, char const *argv[])
     save_vector(result,valorUsuario);
     print_vector(result, valorUsuario , 3);
 
-  tiempo_final = clock();
-  segundos = (double)(tiempo_inicio-tiempo_final)/ CLOCKS_PER_SEC;
-  printf("%f\n", segundos );
 	return 0;
   free(vectorA);
   free(vectorB);
