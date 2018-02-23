@@ -98,6 +98,8 @@ int main(int argc, char const *argv[])
     int Scol2;
     int Srow2;
 
+    clock_t time_ini, time_end;
+
     printf("%s\n\n", "Multiplicación de matrices" );
 	printf("Introduzca el numero de columnas matriz 1: ");
     scanf("%d", &Scol1);
@@ -136,9 +138,11 @@ int main(int argc, char const *argv[])
 		matrix_dinamic(Scol2 , Srow2 , matriz2);
 		printf("%s\n","------------Resultado Multiplicación-----------" );
 		fill_matriz(Scol2 , Srow1 , matrizR);
+    time_ini = clock();
 		mult_matriz(matriz1,matriz2,matrizR,Scol1,Srow1,Scol2,Srow2);
+    time_end = clock();
 		save_matriz(matrizR , Srow1 , Scol2);
-    	
+    printf("%s %.6f\n", "Tiempo de ejecución: ", (double) (time_end - time_ini)/CLOCKS_PER_SEC );
     }
 	
 	else{
