@@ -86,6 +86,7 @@ int main(int argc, char const *argv[])
 {
 	/* code */
 	int valorUsuario;
+  clock_t time_ini,time_end;
 	printf("%s\n\n", "Suma de vectores" );
 	printf("Introduzca tamaño de lo vectores: ");
     scanf("%d", &valorUsuario);
@@ -102,9 +103,12 @@ int main(int argc, char const *argv[])
     Array_dinamic(valorUsuario , vectorB);
     print_vector(vectorA , valorUsuario , ID_1);
     print_vector(vectorB , valorUsuario , ID_2);
+    time_ini = clock();
     Sum_vector(vectorA , vectorB , result , valorUsuario);
+    time_end = clock();
     save_vector(result,valorUsuario);
     print_vector(result, valorUsuario , 3);
+    printf("%s %.6f\n", "Tiempo de ejecución: ", (double) (time_end - time_ini)/CLOCKS_PER_SEC );
 
 	return 0;
   free(vectorA);
