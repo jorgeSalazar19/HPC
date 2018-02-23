@@ -1,25 +1,33 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <omp.h>
+#define CHUNKSIZE 20
 
 void mult_matriz(float **matriz1 , float **matriz2 , float **matrizR, int col1, int  row1, int col2, int row2 ){
-	
-	float cont;
-	for (int i = 0; i < col1; ++i){
-		printf("%s", "[" );
-	    for (int j = 0; j < row2; ++j){
-	      cont = 0,0;
-	      for (int k = 0; k < row2; ++k){
-	        cont += matriz1[i][k] * matriz2[k][j];
-	      }
-	      matrizR[i][j] = cont;
-	      printf("%.2f ", matrizR[i][j]);
-	    }
-	    printf("%s", "]" );
-	    printf("\n");
-	  }
-	//printf("\n");
-}
+	int tid, chunk , i , j , k;
+  chunk = CHUNKSIZE;
+  float cont;
+
+  #pragma omp parallel shared(matriz1,matriz2,matrizR,chunk) private(tid,i,cont,col1,col2,row1,row2)
+  {
+    #pragma omp for schedule(dynamic,chunk)
+  	for (i = 0; i < col1; ++i){
+  		printf("%s", "[" );
+  	    for (j = 0; j < row2; ++j){
+  	      cont = 0,0;
+  	      for (k = 0; k < row2; ++k){
+  	        cont += matriz1[i][k] * matriz2[k][j];
+  	      }
+  	      matrizR[i][j] = cont;
+  	      printf("%.2f ", matrizR[i][j]);
+  	    }
+  	    printf("%s", "]" );
+  	    printf("\n");
+  	  }
+    }
+  }
+
 
 int validate_matriz(int colM1 , int rowM2){
 	if (colM1 == rowM2)
@@ -138,12 +146,16 @@ int main(int argc, char const *argv[])
 		fill_matriz(Scol2 , Srow1 , matrizR);
 		mult_matriz(matriz1,matriz2,matrizR,Scol1,Srow1,Scol2,Srow2);
 		save_matriz(matrizR , Srow1 , Scol2);
+    free(matriz1);
+    free(matriz2);
+    free(matrizR);
     	
     }
 	
 	else{
 		printf("%s\n", "Las matrices no son compatibles para multiplicar" );
 	}
+
 
 	return 0;
 }
