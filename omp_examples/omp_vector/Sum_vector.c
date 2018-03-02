@@ -1,32 +1,65 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
+#include <omp.h>
+#define CHUNKSIZE 20
+#define ID_1 1
+#define ID_2 2
+
+void print_vector(float *vectorA ,int size ,int ID){
+
+  if (ID == 3)
+  {
+    printf("%s%d%s", "vector Resultado ", ID ," = [ " );
+  }
+  else{
+      printf("%s%d%s", "vector ", ID ," = [ " );
+  }
+  for (int i = 0; i < size; ++i)
+  {
+      printf("%.4f %s", vectorA[i] , " " );
+  }
+  printf("%s\n", "]" );
+}
 
 void Array_dinamic(int size , float *vectorA){
 
-	if (vectorA==NULL)
-        printf ("Error de Mem.");
+  int tid, chunk;
+  chunk = CHUNKSIZE;
 
-    printf("%s", "Vector = [" );
-    for (int i=0; i<size; i++){
-		float random = rand()%100;
-        vectorA[i]=random;
-        printf("%.2f ", vectorA[i] );
-        random = 0;
+  #pragma omp parallel shared(vectorA,chunk) private(tid)
+  {
+  	if (vectorA==NULL)
+    {
+          printf ("Error de Mem.");
     }
-    printf("%s", "]" );
-    printf("\n");
-}
+      
+      #pragma omp for schedule(dynamic,chunk)
+        for (int i=0; i<size; i++){
+    		float random = rand()%100;
+            vectorA[i]=random;
+            random = 0;
+
+        }
+    }
+  }
+
 
 void Sum_vector(float *vectorA , float *vectorB , float *result , int size){
-	printf("%s", "Vector Resultado = [" );
-	for (int i = 0; i < size; ++i)
-	{
-		result[i] = vectorA[i] + vectorB[i];
-		printf("%.2f ", result[i] );
-	}
-	printf("%s", "]" );
-	printf("\n");
+  int tid, chunk;
+  chunk = CHUNKSIZE;
+
+  #pragma omp parallel shared(vectorA,chunk) private(tid)
+  {
+    tid = omp_get_thread_num();
+    printf("Hilo %d inicia...\n",tid );
+    #pragma omp for schedule(dynamic,chunk)
+  	for (int i = 0; i < size; ++i)
+  	{
+  		result[i] = vectorA[i] + vectorB[i];
+      printf("Hilo %d valor %.4f \n", tid , result[i] );
+  	}
+  }
 }
 
 void save_vector(float *Vector, int size){
@@ -53,10 +86,8 @@ int main(int argc, char const *argv[])
 {
 	/* code */
 	int valorUsuario = 1000;
-  clock_t time_ini , time_end ;
-
+  clock_t time_ini,time_end;
 	printf("%s\n\n", "Suma de vectores" );
-
 
 	float *vectorA;
 	float *vectorB;
@@ -68,11 +99,17 @@ int main(int argc, char const *argv[])
 
     Array_dinamic(valorUsuario , vectorA);
     Array_dinamic(valorUsuario , vectorB);
+    print_vector(vectorA , valorUsuario , ID_1);
+    print_vector(vectorB , valorUsuario , ID_2);
     time_ini = clock();
     Sum_vector(vectorA , vectorB , result , valorUsuario);
     time_end = clock();
     save_vector(result,valorUsuario);
+    print_vector(result, valorUsuario , 3);
     printf("%s %.6f\n", "Tiempo de ejecución: ", (double) (time_end - time_ini)/CLOCKS_PER_SEC );
 
 	return 0;
+  free(vectorA);
+  free(vectorB);
+  free(result);
 }
