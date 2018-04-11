@@ -23,11 +23,11 @@ void print(float *V, int len){
 
 __global__
 
-void matrixMult(float* d_Matrix , float* d_Result , int width){
+void matrixMult(float* d_Matrix , float* d_Result , int n){
 
 	int row = blockIdx.y*blockDim.y+threadIdx.y;
 
-	if(row < width){
+	if(row < n){
 
 		d_Result[row] = d_Matrix[row]*2;
 	}
@@ -55,7 +55,7 @@ int main(){
 	dim3 bloques(ceil(n/20.0),1,1);
 	dim3 hilos(10,1,1);
 
-	matrixMult<<<bloques,hilos>>>(d_Matrix,d_Result,width);
+	matrixMult<<<bloques,hilos>>>(d_Matrix,d_Result,n);
 
 	cudaMemcpy(h_Result,d_Result,width,cudaMemcpyDeviceToHost);
 
