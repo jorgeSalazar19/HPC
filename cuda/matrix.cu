@@ -25,7 +25,7 @@ __global__
 
 void matrixMult(float* d_Matrix , float* d_Result , int n){
 
-	int row = blockIdx.y*blockDim.y+threadIdx.y;
+	int row = blockIdx.x*blockDim.x+threadIdx.x;
 
 	if(row < n){
 
