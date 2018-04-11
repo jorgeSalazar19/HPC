@@ -52,6 +52,6 @@ int main(){
 
 	cudaFree(d_Matrix);
 	cudaFree(d_Result);
-	free(h_Matrix):
+	free(h_Matrix);
 	free(h_Result);
 }
