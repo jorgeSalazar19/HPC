@@ -1,5 +1,6 @@
 #include <cuda.h>
 #include <stdio.h>
+#include <malloc.h>
 
 __host__
 
@@ -31,8 +32,8 @@ int main(){
 
 	int width = n * n * sizeof(float);
 
-	float *h_Matrix = (float*) Malloc(width);
-	float *h_Result = (float*) Malloc(width);
+	float *h_Matrix = (float*) malloc(width);
+	float *h_Result = (float*) malloc(width);
 
 	fill_vector(h_Matrix, width);
 
