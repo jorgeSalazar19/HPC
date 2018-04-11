@@ -37,7 +37,7 @@ void matrixMult(float* d_Matrix , float* d_Result , int n){
 
 int main(){
 
-	int n = 10;
+	int n = 100;
 
 	int width = n * sizeof(float);
 
@@ -51,7 +51,7 @@ int main(){
 	cudaMalloc ((void **) &d_Matrix, width);
 	cudaMalloc ((void **) &d_Result, width);
 
-	cudaMemcpy(d_Matrix,h_Matrix,width,cudaMemcpyHostToDevice);
+	cudaMemcpy(h_Matrix,d_Matrix,width,cudaMemcpyHostToDevice);
 
 	dim3 bloques(ceil(n/20.0),1,1);
 	dim3 hilos(10,1,1);
