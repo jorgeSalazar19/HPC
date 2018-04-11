@@ -36,7 +36,7 @@ void matrixMult(float* d_Matrix , float* d_Result , int width){
 
 int main(){
 
-	int n = 1000;
+	int n = 10;
 
 	int width = n * n * sizeof(float);
 
