@@ -38,6 +38,7 @@ void matrixMult(float* d_Matrix , float* d_Result , int n){
 int main(){
 
 	int n = 100;
+	cudaError_t error = cudaSuccess;
 
 	int width = n * sizeof(float);
 
@@ -48,15 +49,24 @@ int main(){
 	print(h_Matrix,n);
 
 	float *d_Matrix, *d_Result;
-	cudaMalloc ((void **) &d_Matrix, width);
-	cudaMalloc ((void **) &d_Result, width);
+	error = cudaMalloc ((void **) &d_Matrix, width);
+	if (error != cudaSuccess){
+	printf("Error solicitando memoria en la GPU para d_R\n");
+	exit(-1);
+}
+	error = cudaMalloc ((void **) &d_Result, width);
+	if (error != cudaSuccess){
+	printf("Error solicitando memoria en la GPU para d_R\n");
+	exit(-1);
+}
 
 	cudaMemcpy(h_Matrix,d_Matrix,width,cudaMemcpyHostToDevice);
 
-	dim3 bloques(ceil(n/20.0),1,1);
+	dim3 bloques(ceil(n/10.0),1,1);
 	dim3 hilos(10,1,1);
 
 	matrixMult<<<bloques,hilos>>>(d_Matrix,d_Result,n);
+	cudaDeviceSynchronize();
 
 	cudaMemcpy(d_Result,h_Result,width,cudaMemcpyDeviceToHost);
 	print(h_Result,n);
