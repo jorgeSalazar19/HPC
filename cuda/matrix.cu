@@ -3,7 +3,7 @@
 
 __host__
 
-void fill_vector(float* matrix , size){
+void fill_vector(float* matrix , int size){
 	float aux = 2.0;
 
 	for (int i = 0; i < size; ++i)
@@ -31,14 +31,14 @@ int main(){
 
 	int width = n * n * sizeof(float)
 
-	float *h_Matrix = (float*) Malloc(width)
-	float *h_Result = (float*) Malloc(width)
+	float *h_Matrix = (float*) Malloc(width);
+	float *h_Result = (float*) Malloc(width);
 
 	fill_vector(h_Matrix, width);
 
 	float *d_Matrix, *d_Result;
-	cudaMalloc ((void **) &d_Matrix, width)
-	cudaMalloc ((void **) &d_Result, width)
+	cudaMalloc ((void **) &d_Matrix, width);
+	cudaMalloc ((void **) &d_Result, width);
 
 	cudaMemcpy(d_Matrix,h_Matrix,width,cudaMemcpyHostToDevice);
 
@@ -49,8 +49,8 @@ int main(){
 
 	cudaMemcpy(h_Result,d_Result,width,cudaMemcpyDeviceToHost);
 
-	cudaFree(d_Matrix;
+	cudaFree(d_Matrix);
 	cudaFree(d_Result);
-	free(h_Matrix:
+	free(h_Matrix):
 	free(h_Result);
 }
