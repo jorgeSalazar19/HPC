@@ -13,6 +13,14 @@ void fill_vector(float* matrix , int size){
 	}
 }
 
+__host__
+void print(float *V, int len){
+  for (int i = 0; i < len; i++) {
+    printf("%.2f ", V[i]);
+  }
+  printf("\n");
+}
+
 __global__
 
 void matrixMult(float* d_Matrix , float* d_Result , int width){
@@ -36,6 +44,7 @@ int main(){
 	float *h_Result = (float*) malloc(width);
 
 	fill_vector(h_Matrix,n);
+	print(h_Matrix,n)
 
 	float *d_Matrix, *d_Result;
 	cudaMalloc ((void **) &d_Matrix, width);
@@ -49,6 +58,8 @@ int main(){
 	matrixMult<<<bloques,hilos>>>(d_Matrix,d_Result,width);
 
 	cudaMemcpy(h_Result,d_Result,width,cudaMemcpyDeviceToHost);
+
+	print(h_Result,n)
 
 	cudaFree(d_Matrix);
 	cudaFree(d_Result);
