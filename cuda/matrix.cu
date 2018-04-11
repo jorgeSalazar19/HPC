@@ -25,11 +25,10 @@ __global__
 
 void matrixMult(float* d_Matrix , float* d_Result , int n){
 
-	int row = blockIdx.x*blockDim.x+threadIdx.x;
-	printf("%s\n", "------------" );
+	int row = threadIdx.x + blockDim.x * blockIdx.x;
+
 	if(row < n){
-		printf("%s\n", "++++++++++++" );
-		d_Result[row] = d_Matrix[row]*2;
+		d_Result[row] = d_Matrix[row] * 2;
 	}
 }
 
