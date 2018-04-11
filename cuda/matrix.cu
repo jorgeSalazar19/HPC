@@ -58,7 +58,7 @@ int main(){
 	exit(-1);
 }
 
-	cudaMemcpy(h_Matrix,d_Matrix,width,cudaMemcpyHostToDevice);
+	cudaMemcpy(d_Matrix,h_Matrix,width,cudaMemcpyHostToDevice);
 
 	dim3 bloques(ceil(n/10.0),1,1);
 	dim3 hilos(10,1,1);
@@ -66,7 +66,7 @@ int main(){
 	matrixMult<<<bloques,hilos>>>(d_Matrix,d_Result,n);
 	cudaDeviceSynchronize();
 
-	cudaMemcpy(d_Result,h_Result,width,cudaMemcpyDeviceToHost);
+	cudaMemcpy(h_Result,d_Result,width,cudaMemcpyDeviceToHost);
 	print(h_Result,n);
 
 	cudaFree(d_Matrix);
