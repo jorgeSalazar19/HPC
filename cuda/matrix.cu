@@ -57,7 +57,7 @@ int main(){
 
 	matrixMult<<<bloques,hilos>>>(d_Matrix,d_Result,n);
 
-	cudaMemcpy(h_Result,d_Result,width,cudaMemcpyDeviceToHost);
+	cudaMemcpy(d_Result,h_Result,width,cudaMemcpyDeviceToHost);
 
 	print(h_Result,n);
 
