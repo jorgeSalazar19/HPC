@@ -30,7 +30,7 @@ void matrixMult(float* d_Matrix , float* d_Result , int n){
 	if(row < n){
 
 		d_Result[row] = d_Matrix[row]*2;
-		printf("%d\n", d_Result[row] );
+		printf("%f\n", d_Result[row]);
 	}
 }
 
