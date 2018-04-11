@@ -44,7 +44,7 @@ int main(){
 	float *h_Result = (float*) malloc(width);
 
 	fill_vector(h_Matrix,n);
-	print(h_Matrix,n)
+	print(h_Matrix,n);
 
 	float *d_Matrix, *d_Result;
 	cudaMalloc ((void **) &d_Matrix, width);
@@ -59,7 +59,7 @@ int main(){
 
 	cudaMemcpy(h_Result,d_Result,width,cudaMemcpyDeviceToHost);
 
-	print(h_Result,n)
+	print(h_Result,n);
 
 	cudaFree(d_Matrix);
 	cudaFree(d_Result);
