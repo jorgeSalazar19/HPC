@@ -38,7 +38,7 @@ int main(){
 
 	int n = 10;
 
-	int width = n * n * sizeof(float);
+	int width = n * sizeof(float);
 
 	float *h_Matrix = (float*) malloc(width);
 	float *h_Result = (float*) malloc(width);
