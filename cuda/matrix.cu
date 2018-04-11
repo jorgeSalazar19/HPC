@@ -30,6 +30,7 @@ void matrixMult(float* d_Matrix , float* d_Result , int n){
 	if(row < n){
 
 		d_Result[row] = d_Matrix[row]*2;
+		printf("%d\n", d_Result[row] );
 	}
 }
 
@@ -58,7 +59,6 @@ int main(){
 	matrixMult<<<bloques,hilos>>>(d_Matrix,d_Result,n);
 
 	cudaMemcpy(d_Result,h_Result,width,cudaMemcpyDeviceToHost);
-
 	print(h_Result,n);
 
 	cudaFree(d_Matrix);
