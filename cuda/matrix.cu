@@ -35,7 +35,7 @@ int main(){
 	float *h_Matrix = (float*) malloc(width);
 	float *h_Result = (float*) malloc(width);
 
-	fill_vector(h_Matrix, width);
+	fill_vector(h_Matrix,n);
 
 	float *d_Matrix, *d_Result;
 	cudaMalloc ((void **) &d_Matrix, width);
