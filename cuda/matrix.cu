@@ -20,7 +20,7 @@ void matrixMult(float* d_Matrix , float* d_Result , int width){
 
 	if(row < width){
 
-		d_Result[row] = d_Matrix[row]*2
+		d_Result[row] = d_Matrix[row]*2;
 	}
 }
 
@@ -29,7 +29,7 @@ int main(){
 
 	int n = 1000;
 
-	int width = n * n * sizeof(float)
+	int width = n * n * sizeof(float);
 
 	float *h_Matrix = (float*) Malloc(width);
 	float *h_Result = (float*) Malloc(width);
