@@ -151,7 +151,7 @@ int main(int argc, char** argv){
 	print(h_matrix1, rowM1 , colM2);
 	print(h_matrix2, rowM2 , colM2);
 	print(h_MatrixR, rowM1 , colM2);
-	save_matriz(h_MatrixR , rowM1, colM2)
+	save_matriz(h_MatrixR , rowM1, colM2);
 
 	cudaFree(d_matrix1); cudaFree(d_matrix2); cudaFree(d_MatrixR);
 	free(h_matrix1); free(h_matrix2); free(h_MatrixR);
