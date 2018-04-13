@@ -105,7 +105,7 @@ int main(int argc, char** argv){
 	fscanf(file_2, "%d", &rowM2);
 	fscanf(file_2, "%d", &colM2);
 
-	if (validate(rowM1,colM2)){
+	if (validate(colM1,rowM2)){
 		printf("Las matrices son incompatibles y no se pueden multiplicar");
 		return 1;
 	}
