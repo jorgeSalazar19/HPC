@@ -95,7 +95,7 @@ int main(int argc, char** argv){
 	read_matrix_from_file(h_matrix1, file_1, rowM1, colM1);
 	read_matrix_from_file(h_matrix2, file_2, rowM2, colM2);
 
-	float *d_matrix1, *d_matrix2, d_MatrixR;
+	float *d_matrix1, *d_matrix2, *d_MatrixR;
 
 	error = cudaMalloc ((void **) &d_matrix1, sizeM1);
 	if (error != cudaSuccess){
