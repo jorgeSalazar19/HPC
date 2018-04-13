@@ -3,6 +3,32 @@
 #include <malloc.h>
 
 
+void save_matriz(float *Matrix, int row, int col){
+  FILE *f = fopen("result_mult.csv", "a");
+
+  if (f == NULL){
+    printf("File error\n");
+    exit(-1);
+  }
+
+  for (int i = 0; i < row; i++) {
+    for (int j = 0; j < col; ++j){
+      if(col - 1 == j){
+        fprintf(f, "%.2f", Matrix[i * col + j]);
+      }
+      else{
+        fprintf(f, "%.2f, ",  Matrix[i * col + j]);
+      }
+    }
+     fprintf(f, "\n");   
+  }
+
+  fprintf(f, "\n");
+  fclose(f);
+
+  return;
+}
+
 __host__
 void print(float *M, int rows, int cols){
   printf("\n");
@@ -125,6 +151,7 @@ int main(int argc, char** argv){
 	print(h_matrix1, rowM1 , colM2);
 	print(h_matrix2, rowM2 , colM2);
 	print(h_MatrixR, rowM1 , colM2);
+	save_matriz(h_MatrixR , rowM1, colM2)
 
 	cudaFree(d_matrix1); cudaFree(d_matrix2); cudaFree(d_MatrixR);
 	free(h_matrix1); free(h_matrix2); free(h_MatrixR);
