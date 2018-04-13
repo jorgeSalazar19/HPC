@@ -46,7 +46,7 @@ void read_matrix_from_file(float *M, FILE *archivo, int rows, int cols){
 	return;
 }
 
-void validate(int colM1 ,int rowM2){
+bool validate(int colM1 ,int rowM2){
 
 	if (colM1 != rowM2){
 		return true;
