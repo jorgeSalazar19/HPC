@@ -66,7 +66,7 @@ int main(int argc, char** argv){
 		return 1;
 	}
 
-	float *h_matrix1, *h_matrix2, h_MatrixR;
+	float *h_matrix1, *h_matrix2, *h_MatrixR;
 	int rowM1 , rowM2 , colM1 , colM2; 
 	cudaError_t error = cudaSuccess;
 
