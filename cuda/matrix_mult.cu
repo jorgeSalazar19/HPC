@@ -20,7 +20,7 @@ void save_matriz(float *Matrix, int row, int col){
         fprintf(f, "%.2f, ",  Matrix[i * col + j]);
       }
     }
-     fprintf(f, "\n");   
+     fprintf(f, "\n");
   }
 
   fprintf(f, "\n");
@@ -46,7 +46,7 @@ void print(float *M, int rows, int cols){
 
 
 __global__ void matrixMultGPU(float *d_matrix1, float *d_matrix2, float *d_MatrixR, int rowM1 , int rowM2 , int colM1 , int colM2 ) {
- 
+
 	int k = 0;
 	float sum = 0.0;
 	int col = threadIdx.x + blockDim.x * blockIdx.x;
@@ -93,7 +93,7 @@ int main(int argc, char** argv){
 	}
 
 	float *h_matrix1, *h_matrix2, *h_MatrixR;
-	int rowM1 , rowM2 , colM1 , colM2; 
+	int rowM1 , rowM2 , colM1 , colM2;
 	cudaError_t error = cudaSuccess;
 
 	FILE *file_1 , *file_2;
@@ -148,7 +148,7 @@ int main(int argc, char** argv){
 
 	cudaMemcpy(h_MatrixR,d_MatrixR,sizeMR,cudaMemcpyDeviceToHost);
 
-	print(h_matrix1, rowM1 , colM2);
+	print(h_matrix1, rowM1 , colM1);
 	print(h_matrix2, rowM2 , colM2);
 	print(h_MatrixR, rowM1 , colM2);
 	save_matriz(h_MatrixR , rowM1, colM2);
