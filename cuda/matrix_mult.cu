@@ -148,8 +148,11 @@ int main(int argc, char** argv){
 
 	cudaMemcpy(h_MatrixR,d_MatrixR,sizeMR,cudaMemcpyDeviceToHost);
 
+  printf("Matrix 1");
 	print(h_matrix1, rowM1 , colM1);
+  printf("Matrix 2");
 	print(h_matrix2, rowM2 , colM2);
+  printf("Matrix Resultado");
 	print(h_MatrixR, rowM1 , colM2);
 	save_matriz(h_MatrixR , rowM1, colM2);
 
